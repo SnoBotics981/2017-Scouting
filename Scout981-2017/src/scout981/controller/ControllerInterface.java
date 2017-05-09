@@ -29,6 +29,9 @@ public class ControllerInterface {
 		}
 	}
 
+	/**
+	 * This method is called periodically to get controller data
+	 */
 	public void update() {
 		Team team = null;
 		for (int i = 0; i < foundControllers.size(); i++) {
@@ -70,10 +73,19 @@ public class ControllerInterface {
 		}
 	}
 
+	/**
+	 * Get a list of controllers
+	 * @return Returns a list of connected controllers as a hash map.
+	 */
 	public HashMap<Integer, Controller> getControllers() {
 		return foundControllers.size() == 0 ? null : foundControllers;
 	}
 
+	/**
+	 * Handles controller input for Xbox controllers
+	 * @author Adam Snover
+	 *
+	 */
 	static class XboxController {
 		public static void handleButtonInput(Team team, Component component, Event event) {
 			if (component.getName().equals("Hat Switch")) {
@@ -126,7 +138,12 @@ public class ControllerInterface {
 			}
 		}
 	}
-
+	
+	/**
+	 * Handles controller input for Saitek controllers
+	 * @author Adam Snover
+	 *
+	 */
 	static class SaitekController {
 		public static void handleButtonInput(Team team, Component component, Event event) {
 			if (component.getName().equals("Hat Switch")) {

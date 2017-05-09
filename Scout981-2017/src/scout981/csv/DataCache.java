@@ -23,8 +23,9 @@ public class DataCache {
 	private static HashMap<Integer, String> blu1RopeClimb = new HashMap<>();
 	private static HashMap<Integer, String> blu2RopeClimb = new HashMap<>();
 	private static HashMap<Integer, String> blu3RopeClimb = new HashMap<>();
+	
 	/**
-	 * 
+	 * Get the defense rating of a specific team of a specific match
 	 * @param team The team you want to get data from
 	 * @param match The Match(key) to get data from
 	 * @return Returns defense rating
@@ -52,9 +53,8 @@ public class DataCache {
 	}
 	
 	/**
-	 * 
-	 * @param team Which team you want data to be saved to
-	 * @param match Which Match(key) to save data to
+	 * Increments the defense rating of a specific team with the currently selected match
+	 * @param team Which team's data you want to alter
 	 */
 	public static void incrementDefenseRating(Team team) {
 		int match = Team.getMatch(team);
@@ -70,6 +70,10 @@ public class DataCache {
 		if(team.getTeamName().equals("blu3")) blu3DefenseRating.put(match, value);
 	}
 	
+	/**
+	 * Decrement the defense rating of a specific team with the currently selected match
+	 * @param team Which team's data you want to alter
+	 */
 	public static void decrementDefenseRating(Team team) {
 		int match = Team.getMatch(team);
 		int value = getDefenseRating(team, match);
@@ -85,9 +89,9 @@ public class DataCache {
 	}
 	
 	/**
-	 * Gets the gear count of a specific team.
-	 * @param team Which team you want data to be saved to
-	 * @param row Which Match(key) to save data to
+	 * Gets the gear count of a specific team of a specific match.
+	 * @param team Which team you want get data from
+	 * @param match Which Match(key) to get data from
 	 * @return Returns gear count for team
 	 */
 	public static int getGearCount(Team team, int match) {
@@ -124,6 +128,10 @@ public class DataCache {
 		return 0;
 	}
 	
+	/**
+	 * Increment the gear count of the currently selected team
+	 * @param team Which team's data you want to alter
+	 */
 	public static void incrementGearCount(Team team) {
 		final int match = Team.getMatch(team);
 		int gearCount = getGearCount(team, match);
@@ -148,6 +156,10 @@ public class DataCache {
 		}
 	}
 	
+	/**
+	 * Decrement the gear count of the currently selected team
+	 * @param team Which team's data you want to alter
+	 */
 	public static void decrementGearCount(Team team) {
 		int row = Team.getMatch(team);
 		int gearCount = getGearCount(team, Team.getMatch(team));
@@ -177,6 +189,11 @@ public class DataCache {
 		}
 	}
 	
+	/**
+	 * Give data on a robot's rope climber
+	 * @param team Which team's data you want to alter
+	 * @param string Data on a team's rope climber
+	 */
 	public static void setRopeClimb(Team team, String string) {
 		switch(team.getTeamName()) {
 		case "red1":
@@ -200,6 +217,12 @@ public class DataCache {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param team Which team's data you want to alter
+	 * @param match Which Match(key) you want to alter
+	 * @return Match comment
+	 */
 	public static String getRopeClimb(Team team, int match) {
 		switch(team.getTeamName()) {
 		case "red1":

@@ -15,10 +15,18 @@ public enum Team {
 		this.teamName = teamName;
 	}
 	
+	/**
+	 * Get the team name of the enum
+	 * @return
+	 */
 	public String getTeamName() {
 		return teamName;
 	}
 	
+	/**
+	 * Increment the match number for a specific team
+	 * @param team The team which you want to change matches
+	 */
 	public static void incrementMatch(Team team) {
 		switch(team.getTeamName()) {
 		case "red1":
@@ -42,6 +50,10 @@ public enum Team {
 		}
 	}
 	
+	/**
+	 * Decrement the match number for a specific team
+	 * @param team The team which you want to change matches
+	 */
 	public static void decrementMatch(Team team) {
 		switch(team.getTeamName()) {
 		case "red1":
@@ -77,6 +89,11 @@ public enum Team {
 		}
 	}
 	
+	/**
+	 * Get the team's currently selected match number
+	 * @param team Which team you want to get data from
+	 * @return Match number of selected team
+	 */
 	public static int getMatch(Team team) {
 		switch(team.getTeamName()) {
 		case "red1":
@@ -91,10 +108,15 @@ public enum Team {
 			return blu2Match;
 		case "blu3":
 			return blu3Match;
-		}
-		return 0;
+		default:
+			return 0;
+		}	
 	}
 	
+	/**
+	 * 
+	 * @return Returns the biggest match number ever selected by a specific controller
+	 */
 	public static int getBiggestMatchNumber() {
 		if(red1Match > biggest) biggest = red1Match;
 		if(red2Match > biggest) biggest = red2Match;

@@ -10,6 +10,10 @@ public class CSVWriter extends DataCache {
 
 	private static volatile String fileName = "latest_scout";
 
+	/**
+	 * Saves all data as a CSV in the current working directory
+	 * @param exit True to exit program; false to keep running
+	 */
 	public static void saveDataInCSV(boolean exit) {
 		StringBuffer buffer = new StringBuffer();
 		String data = null;
@@ -47,10 +51,18 @@ public class CSVWriter extends DataCache {
 		}
 	}
 
+	/**
+	 * Set's the name of the CSV file. If no name is set, it will be saved as latest_scout.csv
+	 * @param name Name of file (Extensions are created automatically)
+	 */
 	public static void setFileName(String name) {
 		fileName = name;
 	}
 
+	/**
+	 * Get the name of the impending CSV file
+	 * @return Name of CSV file
+	 */
 	public static String getFileName() {
 		return fileName;
 	}

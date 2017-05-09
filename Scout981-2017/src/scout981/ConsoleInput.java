@@ -3,7 +3,14 @@ package scout981;
 import java.io.Console;
 
 import scout981.csv.CSVWriter;
-
+/**
+ * This class handles all command input
+ * It runs on a separate thread to prevent
+ * lockups while attempting to get the next line of console input.
+ * NONE OF THESE METHODS SHOULD BE OVERRIDEN TO PREVENT UNEXPECTED ERRORS!!!
+ * @author Adam Snover
+ *
+ */
 public class ConsoleInput extends Thread {
 
 	private static ConsoleInput instance;
