@@ -13,7 +13,9 @@ import scout981.csv.CSVWriter;
  */
 public class ConsoleInput extends Thread {
 
-	private static ConsoleInput instance;
+	private static class Holder {
+		static final ConsoleInput INSTANCE = new ConsoleInput();
+	}
 
 	private ConsoleInput() {}
 
@@ -47,9 +49,6 @@ public class ConsoleInput extends Thread {
 	}
 
 	public static ConsoleInput getInstance() {
-		if (instance == null) {
-			instance = new ConsoleInput();
-		}
-		return instance;
+		return Holder.INSTANCE;
 	}
 }
