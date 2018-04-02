@@ -1,9 +1,16 @@
 package scout981;
 
+import scout981.console.ConsoleInput;
+import scout981.console.command.CommandFileName;
+import scout981.console.command.CommandHelp;
+import scout981.console.command.CommandRegistrar;
+import scout981.console.command.CommandSave;
+import scout981.console.command.CommandStop;
 import scout981.controller.ControllerInterface;
 
 public final class Main extends Thread {
 	public static ControllerInterface ci;
+	public static final String VERSION = "Starting Scout-981 2.0 Prototype...";
 	
 	private static Main instance;
 	private static ConsoleInput c;
@@ -15,6 +22,9 @@ public final class Main extends Thread {
 		if(instance == null) {
 			ci = new ControllerInterface();
 			system = System.getProperty("os.name");
+			System.out.println(this.getName() + " [INFO] " + "Computer running: " + system);
+			System.out.println(this.getName() + " [WARNING] " + "No ConsoleInput instance. Creating new one.");
+			System.out.println(this.getName() + " [INFO] " + "There is no problem if you just started the program");
 		} else {
 			return;
 		}
@@ -27,20 +37,20 @@ public final class Main extends Thread {
 		}
 	}
 	
-	public static void logInfo(String message) {
+	public static void logInfo(final String message) {
 		System.out.println(Main.getInstance().getName() +" [INFO] " + message);
 	}
 	
-	public static void logWarning(String message) {
+	public static void logWarning(final String message) {
 		System.out.println(Main.getInstance().getName() + " [WARNING] " + message);
 	}
 	
-	public static void logError(String message) {
+	public static void logError(final String message) {
 		System.out.println(Main.getInstance().getName() + " [ERROR] " + message);
 	}
 	
 	public static Main getInstance() {
-		if(instance == null) instance =  new Main();
+		if(instance == null) instance = new Main();
 		return instance;
 	}
 
@@ -67,8 +77,16 @@ public final class Main extends Thread {
 	@Override
 	public void run() {
 		Main.logInfo(System.getProperty("user.dir"));
-		Main.logInfo("Starting Scout-981 1.7 Release...");
 		Main.logWarning("DO NOT close the console to exit the program! Use the \"stop\" command to properly shutdown the software and save scouting data.\nType \"help\" for a full list of commands\n");
+		Main.logInfo("Registering Commands...");
+		
+		CommandRegistrar.registerCommand("filename", new CommandFileName(), debugging);
+		CommandRegistrar.registerCommand("help", new CommandHelp(), debugging);
+		CommandRegistrar.registerCommand("save", new CommandSave(), debugging);
+		CommandRegistrar.registerCommand("stop", new CommandStop(), debugging);
+		
+		Main.logInfo("Commands Registered.");
+		
 		while(isRunning()) {
 			ci.update();
 		}
@@ -80,7 +98,9 @@ public final class Main extends Thread {
 			return;
 		}
 		setRunning(true);
+		ConsoleInput.setRunning(true);
 		super.start();
+		ConsoleInput.getInstance().start();
 	}
 	
 	public synchronized void stopApp() {
@@ -95,6 +115,8 @@ public final class Main extends Thread {
 		Main main = Main.getInstance();
 		c = ConsoleInput.getInstance();
 		
+		//You can remove or comment out this check method if you don't
+		//want to plug in controllers for whatever reason.
 		main.check();
 		main.start();
 		c.start();

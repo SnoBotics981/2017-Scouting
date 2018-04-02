@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import scout981.Main;
 import scout981.Team;
 
-public class CSVWriter extends DataCache {
+public class CSVWriter {
 
 	private static volatile String fileName = "latest_scout";
 
