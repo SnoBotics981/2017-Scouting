@@ -30,46 +30,88 @@ public final class Main extends Thread {
 		}
 	}
 	
-	public void check() {
+	/**
+	 * Check to if there are any connected controllers
+	 * @param exit Set to true to immediately exit the program if no controllers are found
+	 */
+	public void check(boolean exit) {
 		if(ci.getControllers() == null) {
 			Main.logWarning("No controllers were found!!");
-			System.exit(0);
+			if(exit) System.exit(0);
 		}
 	}
 	
+	/**
+	 * Print an information message to the console
+	 * @param message 
+	 */
 	public static void logInfo(final String message) {
 		System.out.println(Main.getInstance().getName() +" [INFO] " + message);
 	}
 	
+	/**
+	 * Print a warning message to the console
+	 * @param message 
+	 */
 	public static void logWarning(final String message) {
 		System.out.println(Main.getInstance().getName() + " [WARNING] " + message);
 	}
 	
+	/**
+	 * Print an error message to the console
+	 * @param message 
+	 */
 	public static void logError(final String message) {
 		System.out.println(Main.getInstance().getName() + " [ERROR] " + message);
 	}
 	
+	/**
+	 * This gets the current instance as we do not want to create
+	 * more than one instantiation of this class.
+	 * @return Returns this current instance
+	 */
 	public static Main getInstance() {
 		if(instance == null) instance = new Main();
 		return instance;
 	}
 
+	/**
+	 * Check to see if this thread is running. If false, the thread is currently ending/dying
+	 * @return Boolean of @running
+	 */
 	public static boolean isRunning() {
 		return running;
 	}
 
+	/**
+	 * Set the thread to running or not running. Setting this to false
+	 * will close the entire program
+	 * @param running
+	 */
 	public static void setRunning(boolean running) {
 		Main.running = running;
 	}
 	
+	/**
+	 * Check to see if the program is in debug mod
+	 * @return Debugging status (true/false)
+	 */
 	public static boolean isDebugging() {
 		return debugging;
 	}
 	
+	/**
+	 * Set the debugging status
+	 * @param b 
+	 */
 	public static void setDebugging(boolean b) {
 		debugging = b;
 	}
 	
+	/**
+	 * Get the current OS name
+	 * @return
+	 */
 	public static String getSystem() {
 		return system;
 	}
@@ -93,6 +135,9 @@ public final class Main extends Thread {
 		stopApp();
 	}
 	
+	/**
+	 * Starts the entire program
+	 */
 	public synchronized void start() {
 		if(isRunning()) {
 			return;
@@ -103,6 +148,9 @@ public final class Main extends Thread {
 		ConsoleInput.getInstance().start();
 	}
 	
+	/**
+	 * Stops the entire program
+	 */
 	public synchronized void stopApp() {
 		if(isRunning()) {
 			setRunning(false);
@@ -115,9 +163,9 @@ public final class Main extends Thread {
 		Main main = Main.getInstance();
 		c = ConsoleInput.getInstance();
 		
-		//You can remove or comment out this check method if you don't
-		//want to plug in controllers for whatever reason.
-		main.check();
+		//Set argument of check method to false
+		//to continue to run when no controllers are found.
+		main.check(true);
 		main.start();
 		c.start();
 	}
